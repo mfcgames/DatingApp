@@ -1,0 +1,8 @@
+.dropdown-toggle, .dropdown-item{
+    cursor: pointer;
+    color: aqua;
+    
+}
+.dropdown-menu{
+    background-color: rgb(79, 79, 79);
+}
