@@ -28,12 +28,12 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             //Kullanıcının başka kullanıcı ile eşleşen ismini sorgular ve değiştirmesini ister..
-            if(await UserExists(registerDto.UserName)) return BadRequest("Username is taken");
+            if(await UserExists(registerDto.Username)) return BadRequest("Username is taken");
             //Aşağıda kullanıcının ismini küçük duyarlı ve şifresini
             //sayısal ve harf değerlere çevirir kriptografi sağlar..
             using var hmac= new HMACSHA512();
             var user = new AppUser{
-                UserName = registerDto.UserName.ToLower(),
+                UserName = registerDto.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt=hmac.Key
             };
@@ -43,7 +43,7 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             
             return new UserDto{
-                UserName = user.UserName,
+                Username = user.UserName,
                 Token = _tokenService.CreateToken(user)
             }; 
         }
@@ -52,7 +52,7 @@ namespace API.Controllers
         //giriş yapar lakin değil ise Uyarı Mesajı gönderir.
         [HttpPost("login")]
         public async Task<ActionResult<AppUser>> Login(LoginDto loginDto){
-            var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == loginDto.UserName);
+            var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == loginDto.Username);
 
             if(user == null) return Unauthorized("Invalid Username");
 
