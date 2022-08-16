@@ -1,0 +1,69 @@
+<div class="row" *ngIf="user">
+    <div class="col-4">
+        <h1 style="color: aliceblue;">Your Profile: {{user.userName | titlecase}}</h1>
+    </div>
+    <div class="col-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> You Have Made Changes. Any Unsaved Changes Will Be Lost.
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.userName}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>USERNAME: </strong>
+                    <p>{{user.userName | titlecase}}</p>
+                </div>
+                <div>
+                    <strong>Location: </strong>
+                    <p>{{user.city}} , {{user.country}}</p>
+                </div>
+                <div>
+                    <strong>Age: </strong>
+                    <p>{{user.age}}</p>
+                </div>
+                <div>
+                    <strong>Last Active: </strong>
+                    <p>{{user.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Member since: </strong>
+                    <p>{{user.created}}</p>
+                </div>
+
+            </div>
+            <div class="card-footer">
+
+                <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-blocked">Save Changes</button>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset class="user-tabset">
+            <tab heading='About {{user.knownAs}}'>
+                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                    <h4>Description</h4>
+                    <textarea class="form-control" [(ngModel)]="user.introduction" name="introduction" rows="6"></textarea>
+                    <h4 class="mt-2">Looking for</h4>
+                    <textarea class="form-control" [(ngModel)]="user.lookingFor" name="lookingFor" rows="6"></textarea>
+                    <h4 class="mt-2">Interests</h4>
+                    <textarea class="form-control" [(ngModel)]="user.interests" name="interests" rows="6"></textarea>
+                    <h4>Location Details:</h4>
+                    <div class="form-inline">
+                        <label for="city">City: </label>
+                        <input [(ngModel)]="user.city" type="text" name="city" class="form-control mx-2">
+                        <label for="country">Country: </label>
+                        <input [(ngModel)]="user.country" type="text" name="country" class="form-control mx-2">
+                    </div>
+                </form>
+            </tab>
+            <tab heading='Edit Photos'>
+                <p style="color:aliceblue ;">Photo edit will go here</p>
+            </tab>
+        </tabset>
+    </div>
+</div>
