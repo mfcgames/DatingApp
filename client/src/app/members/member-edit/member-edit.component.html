@@ -1,6 +1,6 @@
 <div class="row" *ngIf="user">
     <div class="col-4">
-        <h1 style="color: aliceblue;">Your Profile: {{user.userName | titlecase}}</h1>
+        <h1 style="color: aliceblue;">Your Profile</h1>
     </div>
     <div class="col-8">
         <div class="alert alert-info" *ngIf="editForm.dirty">
@@ -32,13 +32,9 @@
                     <strong>Member since: </strong>
                     <p>{{user.created}}</p>
                 </div>
-
             </div>
             <div class="card-footer">
-
                 <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-blocked">Save Changes</button>
-
-
             </div>
         </div>
     </div>
@@ -62,7 +58,7 @@
                 </form>
             </tab>
             <tab heading='Edit Photos'>
-                <p style="color:aliceblue ;">Photo edit will go here</p>
+                <app-photo-editor [member]="member"></app-photo-editor>
             </tab>
         </tabset>
     </div>
